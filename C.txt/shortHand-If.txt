@@ -1,0 +1,10 @@
+#include <stdio.h>
+
+int main() {
+  int time;
+
+  scanf("%d", &time);
+  
+  (time < 18) ? printf("Bom dia.") : printf("Boa noite.");
+  return 0;
+}

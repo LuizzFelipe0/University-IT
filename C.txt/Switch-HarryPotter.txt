@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main() {
+
+int hp ;
+
+printf("Choose your house in the Harry Potter Universe:\n");
+printf("1-Gryffindor \n2-Slytherin\n3-Ravenclaw\n4-Hufflepuff\n");
+
+scanf("%d", &hp);
+
+switch (hp) {
+  case 1:
+    printf("Gryffindor values are courage, bravery, nerve, and chivalry");
+    break;
+  case 2:
+    printf("Slytherin values are being ambitious, cunning, and resourceful");
+    break;
+  case 3:
+    printf(" Ravenclaw values are intelligence, learning, wisdom and wit");
+    break;
+  case 4:
+    printf("Hufflepuff values are strong sense of justice, loyalty, patience, and a propensity for hard work");
+    break;
+default:
+    printf("Number Invalid!");
+
+}
+}

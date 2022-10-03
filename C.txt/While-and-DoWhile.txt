@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+//WHILE
+int main() {
+
+int i = 0;
+
+while (i < 6) {
+  printf("%d\n", i);
+  i++;
+}
+}
+
+---------------------------------
+
+#include <stdio.h>
+
+// DO|WHILE
+int main() {
+
+int i = 0;
+
+do {
+  printf("%d\n", i);
+  i++;
+}
+while (i < 11);
+}
