@@ -4,29 +4,32 @@
 int main()
 {
 
-    double A, B, C;
+    float A, B, C, x;
 
-    scanf("%lf", &A);
-    scanf("%lf", &B);
-    scanf("%lf", &C);
+    scanf("%f", &A);
+    scanf("%f", &B);
+    scanf("%f", &C);
 
-    if (A >= B + C){
-        printf("NAO FORMA TRIANGULO");
+     if (A < B){ x = A; A = B; B = x; } 
+     if (B < C){ x = B; B = C; C = x; } 
+     if (A < B){ x = A; A = B; B = x; }
+     if (A >= B + C){
+        printf("NAO FORMA TRIANGULO\n");
     }
-    else if ((pow(A, 2.0)) == (pow(B, 2.0)) + (pow(C, 2.0))){
-            printf("TRIANGULO RETANGULO");
+    else if ((pow(A, 2)) == (pow(B, 2)) + (pow(C, 2))){
+            printf("TRIANGULO RETANGULO\n");
         }
-    if ((pow(A, 2.0)) > (pow(B, 2.0)) + (pow(C, 2.0))){
-            printf("TRIANGULO OBTUSANGULO");
+    else if ((pow(A, 2)) > (pow(B, 2)) + (pow(C, 2))){
+            printf("TRIANGULO OBTUSANGULO\n");
         }
-    if ((pow(A, 2.0)) < (pow(B, 2.0)) + (pow(C, 2.0))) {
-            printf("TRIANGULO ACUTANGULO");
+   else if ((pow(A, 2)) < (pow(B, 2)) + (pow(C, 2))) {
+            printf("TRIANGULO ACUTANGULO\n");
         }
     if (A == B && B == C){
-        printf("TRIANGULO EQUILATERO");
+        printf("TRIANGULO EQUILATERO\n");
     }
-    else if (A == B || A == C || B == C){
-        printf("TRIANGULO ISOSCELES");
+    else if (A == B || B == C){
+        printf("TRIANGULO ISOSCELES\n");
     }
 
     return 0;

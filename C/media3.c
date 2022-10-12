@@ -25,6 +25,8 @@ int main(){
     {
         printf("Aluno em exame.\n");
         scanf("%lf", &nRec);
+        printf("Nota do exame: %.1lf\n", nRec);
+
         mediaRec = (nRec + media) / 2;
         
         if (mediaRec < 5)
@@ -35,7 +37,7 @@ int main(){
         {
             printf("Aluno aprovado.\n");
         }
-        printf("Media Final: %.1lf\n", mediaRec);
+        printf("Media final: %.1lf\n", mediaRec);
     }
 
     return 0;
