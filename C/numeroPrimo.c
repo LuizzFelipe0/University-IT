@@ -3,11 +3,11 @@
 int main()
 {
 
-    int number, i, N, count = 0, divisor, divisions;
+    int number, N, divisor, divisions;
 
     scanf("%i", &N);
 
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
         scanf("%i", &number);
 
