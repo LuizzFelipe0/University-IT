@@ -1,0 +1,61 @@
+#include<stdio.h>
+
+typedef struct
+{
+   int v[1000];
+   int qtd;
+} TNumeros;
+
+
+void lerNumeros(TNumeros *c)
+{
+    int i;
+    scanf("%i", &(*c).qtd);
+    for(i=0;i<(*c).qtd;i++)
+       scanf("%i", &(*c).v[i]);
+}
+
+void mostrarNumeros(TNumeros c)
+{
+    int i;
+    for(i=0;i<c.qtd;i++)
+       printf("%i ", c.v[i]);
+    printf("\n");
+}
+
+int maiorNumeros(TNumeros c)
+{
+    int i,m = c.v[0];
+    for(i=0;i<c.qtd;i++)
+      if (c.v[i] > m)
+        m = c.v[i];
+    return m; 
+}
+
+void inverterNumeros(TNumeros *c)
+{
+   int j,i,aux;
+   for(i=0,j=(*c).qtd-1; i<j; i++,j--)
+   {
+      aux = (*c).v[i];
+      (*c).v[i] = (*c).v[j];
+      (*c).v[j] = aux; 
+   }
+}
+
+int main()
+{
+    int i,maior;
+    TNumeros conj;
+
+	 lerNumeros(&conj); 
+
+    maior = maiorNumeros(conj);	    
+ 
+    inverterNumeros(&conj);
+    		
+    mostrarNumeros(conj);
+    printf("Maior = %i\n",maior);
+
+    return 0;
+}
