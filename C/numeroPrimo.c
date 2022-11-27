@@ -2,31 +2,26 @@
 
 int main()
 {
+    int number, divisor, EhPrimo;
 
-    int number, N, divisor, divisions;
+    divisor = 2;
+    EhPrimo = 1;
 
-    scanf("%i", &N);
+    scanf("%d", &number);
 
-    for (int i = 0; i < N; i++)
+    if (number <= 1)
+        EhPrimo = 0;
+
+    while (EhPrimo == 1 && divisor <= number / 2)
     {
-        scanf("%i", &number);
-
-        for (divisor = 1, divisions = 0; divisor <= number; divisor++)
-        {
-            if (number % divisor == 0)
-            {
-                divisions++;
-            }
-        }
-        if (divisions == 2)
-        {
-            printf("%d eh primo\n", number);
-        }
-        else if (divisions > 2)
-        {
-            printf("%d nao eh primo\n", number);
-        }
+        if (number % divisor == 0)
+            EhPrimo = 0;
+        divisor = divisor + 1;
     }
 
+    if (EhPrimo == 1)
+        printf("%d eh primo\n",number);
+    else
+        printf("%d nao eh primo\n",number);
     return 0;
 }
