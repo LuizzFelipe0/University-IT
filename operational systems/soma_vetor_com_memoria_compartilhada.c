@@ -12,7 +12,6 @@
 int main(){
     int v[10] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
     int *soma;
-    char *msg;
 
     // Criação da memória compartilhada
     // Key: Define a chave de acesso a memória compartilhada
