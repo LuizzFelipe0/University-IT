@@ -18,7 +18,7 @@ int main(){
 
     int y = fork();
 
-    if( y==0 ){ // P2
+    if( y == 0 ){ // P2
         printf("Digite uma mensagem: ");
         fgets(message, 50, stdin); // Lê do usuário para a memória compartilhada
         exit(0);
