@@ -1,0 +1,142 @@
+Docker - Guia Essencial
+
+CONCEITOS FUNDAMENTAIS
+
+O que é Docker?
+- Ferramenta mais popular para conteinerização de aplicações
+- Plataforma que simplifica criação, gerenciamento e execução de contêineres
+- Padrão para empacotar e distribuir software
+
+Como funciona a conteinerização:
+
+Isolamento
+- Aplicação roda em "contêiner" - ambiente isolado
+- Empacota código + dependências (bibliotecas, ferramentas, configurações)
+
+Portabilidade
+- Executa consistentemente em qualquer ambiente com Docker Engine
+- Elimina "na minha máquina funciona"
+
+Eficiência
+- Compartilha kernel do sistema operacional do host
+- Mais leve e rápido que VMs (não precisa de SO completo)
+
+Padronização
+- Facilita gerenciamento de infraestrutura
+- Melhora colaboração entre devs e ops (DevOps)
+
+COMANDOS ESSENCIAIS DOCKER
+
+Gerenciar Imagens
+docker build -t minha-app .                    # Constrói imagem do Dockerfile
+docker pull ubuntu:22.04                       # Baixa imagem do registry
+docker images                                  # Lista imagens locais
+docker rmi ubuntu:latest                       # Remove imagem local
+
+Gerenciar Containers
+docker run -it --name meu-container ubuntu bash # Cria e inicia container
+docker ps -a                                   # Lista containers (todos)
+docker exec -it meu-container bash             # Executa comando no container
+docker stop meu-container                      # Para container
+docker start meu-container                     # Inicia container
+docker rm meu-container                        # Remove container
+
+Persistir Dados
+docker volume create meu-volume                # Cria volume nomeado
+docker run -v /dados/app:/app ...             # Monta volume/diretório
+
+Redes
+docker network create minha-rede               # Cria rede customizada
+
+Otimização
+docker system prune                           # Limpa recursos não utilizados
+
+DOCKERFILE - EXEMPLO BASE
+
+FROM ubuntu:latest
+
+RUN apt-get update && \
+    apt-get install -y build-essential nano && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY Exemplo2.c /app/Exemplo2.c
+
+WORKDIR /app
+
+DOCKERFILE - VERSÃO APRIMORADA
+
+# Usa versão específica e mais leve
+FROM ubuntu:22.04
+
+# Instala dependências e limpa em único passo
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends build-essential nano && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Cria e muda para usuário não-root (segurança)
+RUN useradd -m appuser
+WORKDIR /app
+COPY --chown=appuser:appuser Exemplo2.c /app/Exemplo2.c
+USER appuser
+
+# Compila o programa
+RUN gcc -o Exemplo2 Exemplo2.c
+
+# Define comando padrão
+CMD ["./Exemplo2"]
+
+PRÁTICAS RECOMENDADAS
+
+1. Imagens Base
+- Use versões específicas em vez de latest
+- Prefira variantes -slim ou -alpine
+- Use imagens oficiais (mais seguras)
+
+2. Otimização
+- Combine comandos RUN para reduzir camadas
+- Use .dockerignore para excluir arquivos desnecessários
+- Limpe caches de pacotes no mesmo RUN
+
+3. Segurança
+- Execute como usuário não-root
+- Use --no-install-recommends para instalar menos pacotes
+- Atualize regularmente as imagens base
+
+4. Saúde do Container
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -f http://localhost/ || exit 1
+
+COMANDOS PARA DESENVOLVIMENTO
+
+docker logs -f nome_container          # Ver logs em tempo real
+docker inspect nome_container          # Inspecionar detalhes
+docker stats                           # Uso de recursos em tempo real
+docker exec -it nome_container bash    # Acessar container (debugging)
+
+ARQUITETURA DOCKER
+
+- Docker Daemon: Servidor que gerencia containers
+- Docker Client: Interface de linha de comando
+- Docker Registry: Repositório de imagens (Docker Hub)
+- Docker Images: Modelo read-only para criar containers
+- Docker Containers: Instância executável de uma imagem
+
+ESTRUTURA DE PROJETO RECOMENDADA
+
+meu-projeto/
+├── Dockerfile
+├── .dockerignore
+├── docker-compose.yml (opcional)
+├── app/
+│   └── código-fonte
+└── README.md
+
+ARQUIVO .dockerignore
+
+.git
+node_modules
+*.log
+.env
+Dockerfile
+README.md
