@@ -1,0 +1,115 @@
+Processos - Guia Essencial de Bolso
+
+O que é um Processo?
+
+Um programa em execução, incluindo o código do programa e toda a informação do seu estado (memória, registradores, contador de programa, status de E/S) .
+
+O ambiente onde um programa é executado .
+
+Estados de um Processo
+
+Execução (Running): Sendo processado pela CPU .
+
+Pronto (Ready): Aguardando na fila para ser executado .
+
+Espera (Wait/Blocked): Aguardando por algum evento externo ou recurso .
+
+🌳 CRIAÇÃO DE PROCESSOS - ÁRVORE DE PROCESSOS
+Os processos pai criam processos filhos, que por sua vez podem criar outros processos, formando uma árvore de processos.
+
+Compartilhamento de recursos (três abordagens):
+
+Pai e filhos compartilham todos os recursos.
+
+Filhos compartilham apenas um subconjunto dos recursos do pai.
+
+Pai e filho não compartilham recurso algum.
+
+Execução:
+
+Pai e filhos podem executar concorrentemente.
+
+Ou o pai pode esperar até que os filhos terminem.
+
+⎐ A CHAMADA FORK()
+fork() é a chamada de sistema no UNIX que cria um novo processo (filho) que é uma duplicata do processo original (pai) .
+
+O segmento de dados e código do novo processo é o mesmo do original.
+
+c
+#include <unistd.h>
+pid_t fork(void);
+
+Valor de retorno do fork():
+
+Zero no processo filho.
+
+O PID (Process ID) do processo filho no processo pai.
+
+Use o valor de retorno para identificar onde o código está sendo executado.
+
+Exemplo Prático:
+
+c
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main() {
+    if (fork() == 0) {
+        printf("Eu sou o filho\n");
+    } else {
+        printf("Eu sou o pai\n");
+    }
+}
+⏹️ TÉRMINO DE PROCESSO - EXIT()
+O processo executa sua instrução final e pede ao SO para terminá-lo com exit().
+
+exit() realiza limpeza e retorna um status de término.
+
+Retornar um valor inteiro da função main() é equivalente a chamar exit() com o mesmo valor.
+
+c
+#include <stdlib.h>
+int exit(int status);
+O processo que termina notifica seu pai passando o exit status como argumento da função exit().
+
+O processo pai obtém esse status através da função wait() ou waitpid().
+
+⏳ A FUNÇÃO WAIT()
+wait() e waitpid() são usadas pelo processo pai para tomar conhecimento do término do filho e obter seu status .
+
+c
+#include <sys/types.h>
+#include <sys/wait.h>
+pid_t wait(int *status);
+pid_t waitpid(pid_t pid, int *status, int options);
+Comportamento do pai que chama wait()/waitpid():
+
+Bloqueia se todos os filhos ainda estiverem em execução.
+
+Retorna imediatamente com o estado de término de um filho.
+
+Retorna imediatamente com um erro.
+
+Diferenças principais :
+
+wait() bloqueia até qualquer processo filho terminar.
+
+waitpid() pode esperar por um processo filho específico (identificado pelo pid).
+
+waitpid() tem opções para evitar o bloqueio se o filho especificado ainda não terminou.
+
+☠️ PROCESSOS ZUMBIE
+Ocorre quando um processo filho termina antes do pai chamar wait().
+
+O kernel mantém uma pequena quantidade de informações do processo terminado para que o pai possa recuperar seu status mais tarde.
+
+Um processo nesse estado é chamado de Zombie ou <defunct>.
+
+O que acontece se o pai terminar antes do filho?
+
+O processo init (PID 1) se torna o novo pai do processo órfão.
+
+O init é programado para chamar wait() quando um de seus filhos termina, coletando seu status e evitando zombies permanentes.
+

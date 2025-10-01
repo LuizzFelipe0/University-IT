@@ -53,17 +53,17 @@ docker rmi ubuntu:latest                       # Remove imagem local
 
 
 
-docker run -it --name meu-container ubuntu bash # Cria e inicia container
-
-docker ps -a                                   # Lista containers (todos)
-
-docker exec -it meu-container bash             # Executa comando no container
-
-docker stop meu-container                      # Para container
-
-docker start meu-container                     # Inicia container
-
-docker rm meu-container                        # Remove container
+    docker run -it --name meu-container ubuntu bash # Cria e inicia container
+    
+    docker ps -a                                   # Lista containers (todos)
+    
+    docker exec -it meu-container bash             # Executa comando no container
+    
+    docker stop meu-container                      # Para container
+    
+    docker start meu-container                     # Inicia container
+    
+    docker rm meu-container                        # Remove container
 
 
 
@@ -71,9 +71,9 @@ docker rm meu-container                        # Remove container
 
 
 
-docker volume create meu-volume                # Cria volume nomeado
-
-docker run -v /dados/app:/app ...             # Monta volume/diretório
+    docker volume create meu-volume                # Cria volume nomeado
+    
+    docker run -v /dados/app:/app ...             # Monta volume/diretório
 
 
 
@@ -81,7 +81,7 @@ docker run -v /dados/app:/app ...             # Monta volume/diretório
 
 
 
-docker network create minha-rede               # Cria rede customizada
+    docker network create minha-rede               # Cria rede customizada
 
 
 
@@ -89,7 +89,7 @@ docker network create minha-rede               # Cria rede customizada
 
 
 
-docker system prune                           # Limpa recursos não utilizados
+    docker system prune                           # Limpa recursos não utilizados
 
 
 
@@ -97,23 +97,23 @@ docker system prune                           # Limpa recursos não utilizados
 
 
 
-FROM ubuntu:latest
-
-
-
-RUN apt-get update \&\& \\
-
-&nbsp;   apt-get install -y build-essential nano \&\& \\
-
-&nbsp;   rm -rf /var/lib/apt/lists/\*
-
-
-
-COPY Exemplo2.c /app/Exemplo2.c
-
-
-
-WORKDIR /app
+    FROM ubuntu:latest
+    
+    
+    
+    RUN apt-get update \&\& \\
+    
+    &nbsp;   apt-get install -y build-essential nano \&\& \\
+    
+    &nbsp;   rm -rf /var/lib/apt/lists/\*
+    
+    
+    
+    COPY Exemplo2.c /app/Exemplo2.c
+    
+    
+    
+    WORKDIR /app
 
 
 
@@ -121,45 +121,45 @@ WORKDIR /app
 
 
 
-\# Usa versão específica e mais leve
-
-FROM ubuntu:22.04
-
-
-
-\# Instala dependências e limpa em único passo
-
-RUN apt-get update \&\& \\
-
-&nbsp;   apt-get install -y --no-install-recommends build-essential nano \&\& \\
-
-&nbsp;   apt-get clean \&\& \\
-
-&nbsp;   rm -rf /var/lib/apt/lists/\*
-
-
-
-\# Cria e muda para usuário não-root (segurança)
-
-RUN useradd -m appuser
-
-WORKDIR /app
-
-COPY --chown=appuser:appuser Exemplo2.c /app/Exemplo2.c
-
-USER appuser
-
-
-
-\# Compila o programa
-
-RUN gcc -o Exemplo2 Exemplo2.c
-
-
-
-\# Define comando padrão
-
-CMD \["./Exemplo2"]
+    \# Usa versão específica e mais leve
+    
+    FROM ubuntu:22.04
+    
+    
+    
+    \# Instala dependências e limpa em único passo
+    
+    RUN apt-get update \&\& \\
+    
+    &nbsp;   apt-get install -y --no-install-recommends build-essential nano \&\& \\
+    
+    &nbsp;   apt-get clean \&\& \\
+    
+    &nbsp;   rm -rf /var/lib/apt/lists/\*
+    
+    
+    
+    \# Cria e muda para usuário não-root (segurança)
+    
+    RUN useradd -m appuser
+    
+    WORKDIR /app
+    
+    COPY --chown=appuser:appuser Exemplo2.c /app/Exemplo2.c
+    
+    USER appuser
+    
+    
+    
+    \# Compila o programa
+    
+    RUN gcc -o Exemplo2 Exemplo2.c
+    
+    
+    
+    \# Define comando padrão
+    
+    CMD \["./Exemplo2"]
 
 
 
@@ -204,14 +204,14 @@ HEALTHCHECK --interval=30s --timeout=3s \\
 ## **🔧 COMANDOS PARA DESENVOLVIMENTO**
 
 
-
-docker logs -f nome\_container          # Ver logs em tempo real
-
-docker inspect nome\_container          # Inspecionar detalhes
-
-docker stats                           # Uso de recursos em tempo real
-
-docker exec -it nome\_container bash    # Acessar container (debugging)
+    
+    docker logs -f nome\_container          # Ver logs em tempo real
+    
+    docker inspect nome\_container          # Inspecionar detalhes
+    
+    docker stats                           # Uso de recursos em tempo real
+    
+    docker exec -it nome\_container bash    # Acessar container (debugging)
 
 
 
@@ -243,35 +243,35 @@ Docker Containers: Instância executável de uma imagem
 
 
 
-meu-projeto/
-
-├── Dockerfile
-
-├── .dockerignore
-
-├── docker-compose.yml (opcional)
-
-├── app/
-
-│   └── código-fonte
-
-└── README.md
+    meu-projeto/
+    
+    ├── Dockerfile
+    
+    ├── .dockerignore
+    
+    ├── docker-compose.yml (opcional)
+    
+    ├── app/
+    
+    │   └── código-fonte
+    
+    └── README.md
 
 
 
 ## **⚠️ ARQUIVO .dockerignore**
 
-text
-
-.git
-
-node\_modules
-
-\*.log
-
-.env
-
-Dockerfile
-
-README.md
+    text
+    
+    .git
+    
+    node\_modules
+    
+    \*.log
+    
+    .env
+    
+    Dockerfile
+    
+    README.md
 
